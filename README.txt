@@ -1,0 +1,1 @@
+Aim : Create Application for providing receipts storage and receipts , as objects , manipulations
