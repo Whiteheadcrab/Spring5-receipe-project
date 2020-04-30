@@ -3,6 +3,7 @@ package whiteheadcrab.springframework.domain;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Recipe {
@@ -20,6 +21,9 @@ public class Recipe {
     private String directions;
     //todo add
     //private Difficulty difficulty - for future implementations
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Ingredient> ingredients;
 
     @Lob
     private Byte[] image;
