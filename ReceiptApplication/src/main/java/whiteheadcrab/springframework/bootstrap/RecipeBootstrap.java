@@ -28,15 +28,53 @@ public class RecipeBootstrap
         //By using tool
         Optional<UnitOfMeasure> eachUomOptional = unitofMeasureRepository.findByDescription("Each");
 
+        if(!eachUomOptional.isPresent())
+        {
+            throw new RuntimeException("Expected UOM NOT found");
+        }
+
         Optional<UnitOfMeasure> tableSpoonUomOptional = unitofMeasureRepository.findByDescription("Tablespoon");
+
+        if(!tableSpoonUomOptional.isPresent())
+        {
+            throw new RuntimeException("Expected UOM NOT found");
+        }
 
         Optional<UnitOfMeasure> teaSpoonUomOptional = unitofMeasureRepository.findByDescription("Teaspoon");
 
+        if(!teaSpoonUomOptional.isPresent())
+        {
+            throw new RuntimeException("Expected UOM NOT found");
+        }
+
         Optional<UnitOfMeasure> dashUomOptional = unitofMeasureRepository.findByDescription("Dash");
+
+        if(!dashUomOptional.isPresent())
+        {
+            throw new RuntimeException("Expected UOM NOT found");
+        }
 
         Optional<UnitOfMeasure> pintUomOptional = unitofMeasureRepository.findByDescription("Pint");
 
+        if(!pintUomOptional.isPresent())
+        {
+            throw new RuntimeException("Expected UOM NOT found");
+        }
+
         Optional<UnitOfMeasure> cupUomOptional = unitofMeasureRepository.findByDescription("Cup");
+
+        if(!cupUomOptional.isPresent())
+        {
+            throw new RuntimeException("Expected UOM NOT found");
+        }
+
+        //Set of get commands for tool category
+        UnitOfMeasure eachUom = eachUomOptional.get();
+        UnitOfMeasure tableSpoonUom = tableSpoonUomOptional.get();
+        UnitOfMeasure teaSpoonUom = teaSpoonUomOptional.get();
+        UnitOfMeasure dashUom = dashUomOptional.get();
+        UnitOfMeasure pintUom = pintUomOptional.get();
+        UnitOfMeasure cupsUom = cupUomOptional.get();
 
 
         //By using kitchen
