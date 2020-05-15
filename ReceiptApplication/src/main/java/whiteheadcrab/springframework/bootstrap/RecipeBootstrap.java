@@ -80,7 +80,20 @@ public class RecipeBootstrap
         //By using kitchen
         Optional<Category> americanCategoryOptional = categoryRepository.findByDescription("American");
 
+        if(!americanCategoryOptional.isPresent())
+        {
+            throw new RuntimeException("Expected Category NOT found");
+        }
+
         Optional<Category> mexicanCategoryOptional = categoryRepository.findByDescription("Mexican");
+
+        if(!mexicanCategoryOptional.isPresent())
+        {
+            throw new RuntimeException("Expected Category NOT found");
+        }
+
+        Category american = americanCategoryOptional.get();
+        Category mexican = mexicanCategoryOptional.get();
 
         return null;
     }
