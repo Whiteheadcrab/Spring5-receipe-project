@@ -19,7 +19,10 @@ public class Ingredient
     @ManyToOne
     private Recipe recipe;
 
-    public Ingredient(String ripe_avocados, BigDecimal bigDecimal, UnitOfMeasure eachUom) {
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom) {
+        this.description = description;
+        this.amount = amount;
+        this.uom = uom;
     }
 
     public Long getId() {

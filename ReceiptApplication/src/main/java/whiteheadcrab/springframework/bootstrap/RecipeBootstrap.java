@@ -1,5 +1,8 @@
 package whiteheadcrab.springframework.bootstrap;
 
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
 import whiteheadcrab.springframework.domain.*;
 import whiteheadcrab.springframework.repositories.CategoryRepository;
 import whiteheadcrab.springframework.repositories.RecipeRepositories;
@@ -10,7 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class RecipeBootstrap
+@Component
+public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent>
 {
     private final CategoryRepository categoryRepository;
     private final RecipeRepositories recipeRepositories;
@@ -21,6 +25,11 @@ public class RecipeBootstrap
         this.categoryRepository = categoryRepository;
         this.recipeRepositories = recipeRepositories;
         this.unitofMeasureRepository = unitofMeasureRepository;
+    }
+
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        recipeRepositories.saveAll(getRecipes());
     }
 
     private List<Recipe> getRecipes()
