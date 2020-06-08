@@ -1,11 +1,12 @@
 package whiteheadcrab.springframework.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import whiteheadcrab.springframework.services.RecipeService;
 
-
+@Slf4j
 @Controller
 public class IndexController
 {
@@ -19,6 +20,8 @@ public class IndexController
     @RequestMapping({"/","","/index"})
     public String getIndexPage(Model model)
     {
+        log.debug("Loading Index Controller...");
+
         model.addAttribute("recipes",recipeService.getRecipes());
 
         return "index";
