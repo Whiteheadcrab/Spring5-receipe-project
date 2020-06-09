@@ -1,6 +1,5 @@
 package whiteheadcrab.springframework.bootstrap;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -9,12 +8,12 @@ import whiteheadcrab.springframework.repositories.CategoryRepository;
 import whiteheadcrab.springframework.repositories.RecipeRepositories;
 import whiteheadcrab.springframework.repositories.UnitofMeasureRepository;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent>
 {
@@ -22,7 +21,8 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     private final RecipeRepositories recipeRepositories;
     private final UnitofMeasureRepository unitofMeasureRepository;
 
-    public RecipeBootstrap(CategoryRepository categoryRepository, RecipeRepositories recipeRepositories, UnitofMeasureRepository unitofMeasureRepository)
+    public RecipeBootstrap(CategoryRepository categoryRepository, RecipeRepositories recipeRepositories,
+                           UnitofMeasureRepository unitofMeasureRepository)
     {
         this.categoryRepository = categoryRepository;
         this.recipeRepositories = recipeRepositories;
@@ -30,9 +30,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     }
 
     @Override
+    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         recipeRepositories.saveAll(getRecipes());
-        log.debug("Loading Bootstrap part...");
     }
 
     private List<Recipe> getRecipes()

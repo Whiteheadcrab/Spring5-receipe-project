@@ -1,9 +1,9 @@
-package whiteheadcrab.springframework.repositories;
+package whiteheadcrab.springframework.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import whiteheadcrab.springframework.domain.Recipe;
-import whiteheadcrab.springframework.services.RecipeService;
+import whiteheadcrab.springframework.repositories.RecipeRepositories;
 
 import java.util.HashSet;
 import java.util.Set;
