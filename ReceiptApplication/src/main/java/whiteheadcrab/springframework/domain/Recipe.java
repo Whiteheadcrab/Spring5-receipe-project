@@ -9,7 +9,8 @@ import java.util.Set;
 
 @Data
 @Entity
-public class Recipe {
+public class Recipe
+{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +44,8 @@ public class Recipe {
     joinColumns = @JoinColumn(name = "recipe_id") , inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
-    public void setNotes(Notes notes) {
+    public void setNotes(Notes notes)
+    {
         this.notes = notes;
         notes.setRecipe(this);
     }
