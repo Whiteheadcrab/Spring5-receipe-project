@@ -6,6 +6,7 @@ import whiteheadcrab.springframework.domain.Recipe;
 import whiteheadcrab.springframework.repositories.RecipeRepositories;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Slf4j
@@ -26,5 +27,17 @@ public class RecipeServiceImpl implements RecipeService
         Set<Recipe> recipeSet = new HashSet<>();
         recipeRepositories.findAll().iterator().forEachRemaining(recipeSet::add);
         return recipeSet;
+    }
+
+    public Recipe findById(Long l)
+    {
+        Optional<Recipe> recipeOptional = recipeRepositories.findById(l);
+
+        if (!recipeOptional.isPresent())
+        {
+            throw new RuntimeException("Recipe Not Found!");
+        }
+
+        return  recipeOptional.get();
     }
 }

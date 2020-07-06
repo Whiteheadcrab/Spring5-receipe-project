@@ -8,9 +8,11 @@ import whiteheadcrab.springframework.domain.Recipe;
 import whiteheadcrab.springframework.repositories.RecipeRepositories;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 public class RecipeServiceImplTest {
@@ -26,6 +28,22 @@ public class RecipeServiceImplTest {
         MockitoAnnotations.initMocks(this);
 
         recipeServiceimpl = new RecipeServiceImpl(recipeRepositories);
+    }
+
+    @Test
+    void getRecipeByIdTest() throws Exception
+    {
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        when(recipeRepositories.findById(anyLong())).thenReturn(recipeOptional);
+
+        Recipe recipeReturned = recipeServiceimpl.findById(1L);
+
+        assertNotNull("Null recipe returned", recipeReturned.getDescription());
+        verify(recipeRepositories,times(1)).findById(anyLong());
+        verify(recipeRepositories,never()).findAll();
     }
 
     @Test
