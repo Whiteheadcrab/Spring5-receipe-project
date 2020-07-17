@@ -1,6 +1,5 @@
 package whiteheadcrab.springframework.domain;
 
-
 import lombok.Data;
 
 import javax.persistence.*;
