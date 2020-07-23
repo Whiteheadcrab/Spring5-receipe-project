@@ -35,7 +35,7 @@
                                     <li th:remove="all">cat one</li>
                                     <li th:remove="all">cat two</li>
                                     <!--/*@thymesVar id="recipe" type="whiteheadcrab.springframework.domain.Recipe"*/-->
-                                    <li th:each="category : ${recipe.category}" th:text="${category.getDescription()}">cat three</li>
+                                    <li th:each="categories : ${recipe.categories}" th:text="${categories.getDescription()}">cat three</li>
                                 </ul>
                             </div>
                         </div>
