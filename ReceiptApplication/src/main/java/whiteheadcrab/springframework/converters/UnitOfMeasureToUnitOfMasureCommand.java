@@ -18,10 +18,13 @@ public class UnitOfMeasureToUnitOfMasureCommand implements Converter<UnitOfMeasu
         if(unitOfMeasure != null)
         {
             final UnitofMeasureCommand uomc = new UnitofMeasureCommand();
+
             uomc.setId(unitOfMeasure.getId());
             uomc.setDescription(unitOfMeasure.getDescription());
+
             return uomc;
         }
+
         return null;
     }
 }
