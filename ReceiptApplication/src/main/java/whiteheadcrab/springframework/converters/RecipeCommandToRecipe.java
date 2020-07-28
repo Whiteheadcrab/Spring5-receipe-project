@@ -8,16 +8,15 @@ import whiteheadcrab.springframework.commands.RecipeCommand;
 import whiteheadcrab.springframework.domain.Recipe;
 
 @Component
-public class RecipeComandToRecipe implements Converter<RecipeCommand, Recipe>
+public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe>
 {
     private final CategoryCommandToCategory categoryCommandToCategory;
     private final IngredientCommandToIngredient ingredientCommandToIngredient;
     private final NotesCommandToNotes notesCommandToNotes;
 
-    public RecipeComandToRecipe(CategoryCommandToCategory categoryCommandToCategory ,
-                                IngredientCommandToIngredient ingredientCommandToIngredient,
-                                NotesCommandToNotes notesCommandToNotes)
-    {
+    public RecipeCommandToRecipe(CategoryCommandToCategory categoryCommandToCategory,
+                                 IngredientCommandToIngredient ingredientCommandToIngredient,
+                                 NotesCommandToNotes notesCommandToNotes) {
         this.categoryCommandToCategory = categoryCommandToCategory;
         this.ingredientCommandToIngredient = ingredientCommandToIngredient;
         this.notesCommandToNotes = notesCommandToNotes;
@@ -41,6 +40,18 @@ public class RecipeComandToRecipe implements Converter<RecipeCommand, Recipe>
         recipe.setServings(recipeCommand.getServings());
         recipe.setSource(recipeCommand.getSource());
         recipe.setNotes(notesCommandToNotes.convert(recipeCommand.getNotes()));
+
+        if(recipeCommand.getCategoryCommands() != null && recipeCommand.getCategoryCommands().size() > 0)
+        {
+            recipeCommand.getCategoryCommands()
+                    .forEach( category -> recipeCommand.getCategoryCommands().add(categoryCommandToCategory.convert(category)));
+        }
+
+        if(recipeCommand.getIngredients() != null && recipeCommand.getIngredients().size() > 0)
+        {
+            recipeCommand.getIngredients()
+                    .forEach( ingredient -> recipeCommand.getIngredients().add(ingredientCommandToIngredient.convert(ingredient)));
+        }
 
         return recipe;
     }
