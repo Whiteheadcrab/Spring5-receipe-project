@@ -2,6 +2,10 @@ package whiteheadcrab.springframework.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import whiteheadcrab.springframework.commands.RecipeCommand;
+import whiteheadcrab.springframework.converters.RecipeCommandToRecipe;
+import whiteheadcrab.springframework.converters.RecipeToCommandRecipe;
 import whiteheadcrab.springframework.domain.Recipe;
 import whiteheadcrab.springframework.repositories.RecipeRepositories;
 
@@ -14,11 +18,16 @@ import java.util.Set;
 public class RecipeServiceImpl implements RecipeService
 {
     private final RecipeRepositories recipeRepositories;
+    private final RecipeCommandToRecipe recipeCommandToRecipe;
+    private final RecipeToCommandRecipe recipeToCommandRecipe;
 
-    public RecipeServiceImpl(RecipeRepositories recipeRepositories)
+    public RecipeServiceImpl(RecipeRepositories recipeRepositories, RecipeCommandToRecipe recipeCommandToRecipe, RecipeToCommandRecipe recipeToCommandRecipe)
     {
         this.recipeRepositories = recipeRepositories;
+        this.recipeCommandToRecipe = recipeCommandToRecipe;
+        this.recipeToCommandRecipe = recipeToCommandRecipe;
     }
+
 
     @Override
     public Set<Recipe> getRecipes()
@@ -39,5 +48,15 @@ public class RecipeServiceImpl implements RecipeService
         }
 
         return  recipeOptional.get();
+    }
+
+    @Override
+    @Transactional
+    public RecipeCommand saveRecipeCommand(RecipeCommand command) {
+        Recipe detachedRecipe = recipeCommandToRecipe.convert(command);
+
+        Recipe savedRecipe = recipeRepositories.save(detachedRecipe);
+        log.debug("Saved RecipeId:" + savedRecipe.getId());
+        return recipeToCommandRecipe.convert(savedRecipe);
     }
 }
