@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import whiteheadcrab.springframework.commands.RecipeCommand;
 import whiteheadcrab.springframework.converters.RecipeCommandToRecipe;
 import whiteheadcrab.springframework.converters.RecipeToCommandRecipe;
 import whiteheadcrab.springframework.domain.Recipe;
@@ -52,6 +53,26 @@ public class RecipeServiceImplTest {
         assertNotNull("Null recipe returned", recipeReturned.getDescription());
         verify(recipeRepositories,times(1)).findById(anyLong());
         verify(recipeRepositories,never()).findAll();
+    }
+
+    @Test
+    public void getRecipeCoomandByIdTest() throws Exception {
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        when(recipeRepositories.findById(anyLong())).thenReturn(recipeOptional);
+
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L);
+
+        when(recipeToCommandRecipe.convert(any())).thenReturn(recipeCommand);
+
+        RecipeCommand commandById = recipeServiceimpl.findCommandById(1L);
+
+        assertNotNull("Null recipe returned", commandById.toString());
+        verify(recipeRepositories, times(1)).findById(anyLong());
+        verify(recipeRepositories, never()).findAll();
     }
 
     @Test
