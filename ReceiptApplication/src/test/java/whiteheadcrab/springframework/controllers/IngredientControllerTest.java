@@ -8,6 +8,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import whiteheadcrab.springframework.commands.IngredientCommand;
 import whiteheadcrab.springframework.commands.RecipeCommand;
+import whiteheadcrab.springframework.services.IngredientService;
 import whiteheadcrab.springframework.services.RecipeService;
 
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -32,7 +33,7 @@ public class IngredientControllerTest
     {
         MockitoAnnotations.initMocks(this);
 
-        ingredientController = new IngredientController(recipeService);
+        ingredientController = new IngredientController(recipeService, ingredientService);
         mockMvc = MockMvcBuilders.standaloneSetup(ingredientController).build();
     }
 
