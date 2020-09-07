@@ -74,8 +74,7 @@ public class IngredientServiceImplTest
 
         //when
         assertEquals(Long.valueOf(3L), ingredientCommand.getId());
-        //This is failed part . Expected 1 , actual null
-        //assertEquals(Long.valueOf(1L), ingredientCommand.getRecipeId());
+        assertEquals(Long.valueOf(1L), ingredientCommand.getRecipeId());
         verify(recipeRepositories, times(1)).findById(anyLong());
     }
 }
