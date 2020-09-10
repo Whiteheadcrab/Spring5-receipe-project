@@ -31,7 +31,7 @@ public class RecipeToCommandRecipeTest {
         converter = new RecipeToCommandRecipe(
                 new CategoryToCategoryCommand(),
                 new NotesToNotesCommand(),
-                new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMasureCommand())
+                new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand())
                 );
     }
 

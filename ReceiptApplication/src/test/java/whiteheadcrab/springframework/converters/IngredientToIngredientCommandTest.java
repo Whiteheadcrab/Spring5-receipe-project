@@ -24,7 +24,7 @@ public class IngredientToIngredientCommandTest
     @BeforeEach
     public void setUp() throws Exception
     {
-        converter = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMasureCommand());
+        converter = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
     }
 
     @Test

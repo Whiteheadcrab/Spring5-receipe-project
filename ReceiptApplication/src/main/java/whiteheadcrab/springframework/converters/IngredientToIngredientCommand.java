@@ -10,9 +10,9 @@ import whiteheadcrab.springframework.domain.Ingredient;
 @Component
 public class IngredientToIngredientCommand implements Converter<Ingredient, IngredientCommand>
 {
-    private final UnitOfMeasureToUnitOfMasureCommand uomTouomc;
+    private final UnitOfMeasureToUnitOfMeasureCommand uomTouomc;
 
-    public IngredientToIngredientCommand(UnitOfMeasureToUnitOfMasureCommand uomTouomc)
+    public IngredientToIngredientCommand(UnitOfMeasureToUnitOfMeasureCommand uomTouomc)
     {
         this.uomTouomc=uomTouomc;
     }

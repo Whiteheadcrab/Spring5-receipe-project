@@ -6,7 +6,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import whiteheadcrab.springframework.commands.IngredientCommand;
 import whiteheadcrab.springframework.converters.IngredientToIngredientCommand;
-import whiteheadcrab.springframework.converters.UnitOfMeasureToUnitOfMasureCommand;
+import whiteheadcrab.springframework.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import whiteheadcrab.springframework.domain.Ingredient;
 import whiteheadcrab.springframework.domain.Recipe;
 import whiteheadcrab.springframework.repositories.RecipeRepositories;
@@ -29,7 +29,7 @@ public class IngredientServiceImplTest
     //init converters
     public IngredientServiceImplTest()
     {
-        this.ingredientToIngredientCommand = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMasureCommand());
+        this.ingredientToIngredientCommand = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
     }
 
 
@@ -88,7 +88,7 @@ public class IngredientServiceImplTest
         Optional<Recipe> recipeOptional = Optional.of(new Recipe());
 
         Recipe savedRecipe = new Recipe();
-        savedRecipe.addIngredient(new Ingredient());
+        savedRecipe.addIngredients(new Ingredient());
         savedRecipe.getIngredients().iterator().next().setId(3L);
 
         when(recipeRepositories.findById(anyLong())).thenReturn(recipeOptional);

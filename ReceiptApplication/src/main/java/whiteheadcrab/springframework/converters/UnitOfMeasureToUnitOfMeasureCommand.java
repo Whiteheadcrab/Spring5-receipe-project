@@ -8,7 +8,7 @@ import whiteheadcrab.springframework.commands.UnitofMeasureCommand;
 import whiteheadcrab.springframework.domain.UnitOfMeasure;
 
 @Component
-public class UnitOfMeasureToUnitOfMasureCommand implements Converter<UnitOfMeasure, UnitofMeasureCommand>
+public class UnitOfMeasureToUnitOfMeasureCommand implements Converter<UnitOfMeasure, UnitofMeasureCommand>
 {
     @Synchronized
     @Nullable
