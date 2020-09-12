@@ -5,11 +5,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import whiteheadcrab.springframework.commands.IngredientCommand;
+import whiteheadcrab.springframework.converters.IngredientCommandToIngredient;
 import whiteheadcrab.springframework.converters.IngredientToIngredientCommand;
+import whiteheadcrab.springframework.converters.UnitOfMeasureCommandToUnitOfMeasure;
 import whiteheadcrab.springframework.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import whiteheadcrab.springframework.domain.Ingredient;
 import whiteheadcrab.springframework.domain.Recipe;
 import whiteheadcrab.springframework.repositories.RecipeRepositories;
+import whiteheadcrab.springframework.repositories.UnitofMeasureRepository;
 
 import java.util.Optional;
 
@@ -20,6 +23,10 @@ import static org.mockito.Mockito.*;
 public class IngredientServiceImplTest
 {
     private final IngredientToIngredientCommand ingredientToIngredientCommand;
+    private final IngredientCommandToIngredient ingredientCommandToIngredient;
+
+    @Mock
+    UnitofMeasureRepository unitofMeasureRepository;
 
     @Mock
     RecipeRepositories recipeRepositories;
@@ -30,6 +37,7 @@ public class IngredientServiceImplTest
     public IngredientServiceImplTest()
     {
         this.ingredientToIngredientCommand = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
+        this.ingredientCommandToIngredient = new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure());
     }
 
 
@@ -38,7 +46,8 @@ public class IngredientServiceImplTest
     {
         MockitoAnnotations.initMocks(this);
 
-        ingredientService = new IngredientServiceImpl(ingredientToIngredientCommand, recipeRepositories);
+        ingredientService = new IngredientServiceImpl(ingredientToIngredientCommand, ingredientCommandToIngredient,
+                recipeRepositories, unitofMeasureRepository);
     }
 
     @Test

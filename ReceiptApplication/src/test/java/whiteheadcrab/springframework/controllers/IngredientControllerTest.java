@@ -6,11 +6,13 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import whiteheadcrab.springframework.commands.IngredientCommand;
 import whiteheadcrab.springframework.commands.RecipeCommand;
 import whiteheadcrab.springframework.services.IngredientService;
 import whiteheadcrab.springframework.services.RecipeService;
+import whiteheadcrab.springframework.services.UnitOfMeasureService;
 
 import java.util.HashSet;
 
@@ -29,7 +31,7 @@ public class IngredientControllerTest
     RecipeService recipeService;
 
     @Mock
-    UnitOfMesureService unitOfMeasureService;
+    UnitOfMeasureService unitOfMeasureService;
 
     IngredientController ingredientController;
 
@@ -40,7 +42,7 @@ public class IngredientControllerTest
     {
         MockitoAnnotations.initMocks(this);
 
-        ingredientController = new IngredientController(recipeService, ingredientService);
+        ingredientController = new IngredientController(recipeService, ingredientService, unitOfMeasureService);
         mockMvc = MockMvcBuilders.standaloneSetup(ingredientController).build();
     }
 
@@ -104,7 +106,7 @@ public class IngredientControllerTest
         when(ingredientService.saveIngredientCommand(any())).thenReturn(command);
 
         //then
-        mockMvc.perform(post("/recipe/2/ingredient")
+        mockMvc.perform((RequestBuilder) post("/recipe/2/ingredient")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .queryParam("id", "")
                 .queryParam("description", "some string")

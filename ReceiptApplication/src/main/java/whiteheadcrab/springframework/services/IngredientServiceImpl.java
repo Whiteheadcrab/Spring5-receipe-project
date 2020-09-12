@@ -2,10 +2,14 @@ package whiteheadcrab.springframework.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import whiteheadcrab.springframework.commands.IngredientCommand;
+import whiteheadcrab.springframework.converters.IngredientCommandToIngredient;
 import whiteheadcrab.springframework.converters.IngredientToIngredientCommand;
+import whiteheadcrab.springframework.domain.Ingredient;
 import whiteheadcrab.springframework.domain.Recipe;
 import whiteheadcrab.springframework.repositories.RecipeRepositories;
+import whiteheadcrab.springframework.repositories.UnitofMeasureRepository;
 
 import java.util.Optional;
 
@@ -13,15 +17,22 @@ import java.util.Optional;
 @Service
 public class IngredientServiceImpl implements IngredientService
 {
-    private final IngredientToIngredientCommand ingredientToIngredientCommand;
-    private final RecipeRepositories recipeRepositories;
-
     public IngredientServiceImpl(IngredientToIngredientCommand ingredientToIngredientCommand,
-                                 RecipeRepositories recipeRepositories)
-    {
+                                 IngredientCommandToIngredient ingredientCommandToIngredient,
+                                 RecipeRepositories recipeRepositories,
+                                 UnitofMeasureRepository unitofMeasureRepository) {
         this.ingredientToIngredientCommand = ingredientToIngredientCommand;
+        this.ingredientCommandToIngredient = ingredientCommandToIngredient;
         this.recipeRepositories = recipeRepositories;
+        this.unitofMeasureRepository = unitofMeasureRepository;
     }
+
+    private final IngredientToIngredientCommand ingredientToIngredientCommand;
+    private final IngredientCommandToIngredient ingredientCommandToIngredient;
+    private final RecipeRepositories recipeRepositories;
+    private final UnitofMeasureRepository unitofMeasureRepository;
+
+
 
     @Override
     public IngredientCommand findByRecipeIdAndIngredientId(Long recipeId, Long ingredientId) {
@@ -45,5 +56,46 @@ public class IngredientServiceImpl implements IngredientService
         }
 
         return ingredientCommandOptional.get();
+    }
+
+    @Override
+    @Transactional
+    public IngredientCommand saveIngredientCommand(IngredientCommand command) {
+        Optional<Recipe> recipeOptional = recipeRepositories.findById(command.getRecipeId());
+
+        if(!recipeOptional.isPresent()){
+
+            //todo toss error if not found!
+            log.error("Recipe not found for id: " + command.getRecipeId());
+            return new IngredientCommand();
+        } else {
+            Recipe recipe = recipeOptional.get();
+
+            Optional<Ingredient> ingredientOptional = recipe
+                    .getIngredients()
+                    .stream()
+                    .filter(ingredient -> ingredient.getId().equals(command.getId()))
+                    .findFirst();
+
+            if(ingredientOptional.isPresent()){
+                Ingredient ingredientFound = ingredientOptional.get();
+                ingredientFound.setDescription(command.getDescription());
+                ingredientFound.setAmount(command.getAmount());
+                ingredientFound.setUom(unitofMeasureRepository
+                        .findById(command.getUnitofMeasureCommand().getId())
+                        .orElseThrow(() -> new RuntimeException("UOM NOT FOUND"))); //todo address this
+            } else {
+                //add new Ingredient
+                recipe.addIngredients(ingredientCommandToIngredient.convert(command));
+            }
+
+            Recipe savedRecipe = recipeRepositories.save(recipe);
+
+            //to do check for fail
+            return ingredientToIngredientCommand.convert(savedRecipe.getIngredients().stream()
+                    .filter(recipeIngredients -> recipeIngredients.getId().equals(command.getId()))
+                    .findFirst()
+                    .get());
+        }
     }
 }

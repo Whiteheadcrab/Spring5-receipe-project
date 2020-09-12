@@ -13,6 +13,7 @@ import java.util.stream.StreamSupport;
 public class UnitOfMeasureServiceImpl implements UnitOfMeasureService
 {
     private final UnitofMeasureRepository unitOfMeasureRepository;
+    private final UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand;
 
     public UnitOfMeasureServiceImpl(UnitofMeasureRepository unitOfMeasureRepository,
                                     UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand)
@@ -20,8 +21,6 @@ public class UnitOfMeasureServiceImpl implements UnitOfMeasureService
         this.unitOfMeasureRepository = unitOfMeasureRepository;
         this.unitOfMeasureToUnitOfMeasureCommand = unitOfMeasureToUnitOfMeasureCommand;
     }
-
-    private final UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand;
 
 
     @Override
