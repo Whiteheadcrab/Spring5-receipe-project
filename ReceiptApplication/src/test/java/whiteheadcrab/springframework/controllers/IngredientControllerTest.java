@@ -6,7 +6,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import whiteheadcrab.springframework.commands.IngredientCommand;
 import whiteheadcrab.springframework.commands.RecipeCommand;
@@ -18,8 +17,8 @@ import java.util.HashSet;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
-import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class IngredientControllerTest
@@ -106,7 +105,7 @@ public class IngredientControllerTest
         when(ingredientService.saveIngredientCommand(any())).thenReturn(command);
 
         //then
-        mockMvc.perform((RequestBuilder) post("/recipe/2/ingredient")
+        mockMvc.perform(post("/recipe/2/ingredient")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .queryParam("id", "")
                 .queryParam("description", "some string")
