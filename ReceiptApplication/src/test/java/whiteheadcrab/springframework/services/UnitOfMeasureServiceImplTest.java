@@ -25,7 +25,7 @@ public class UnitOfMeasureServiceImplTest
     UnitofMeasureRepository unitofMeasureRepository;
 
     @BeforeEach
-    public void setUp()
+    public void setUp() throws Exception
     {
         MockitoAnnotations.initMocks(this);
 
@@ -33,8 +33,7 @@ public class UnitOfMeasureServiceImplTest
     }
 
     @Test
-    public void listAllUoms()
-    {
+    public void listAllUoms() {
         //given
         Set<UnitOfMeasure> unitOfMeasures = new HashSet<>();
         UnitOfMeasure uom1 = new UnitOfMeasure();
