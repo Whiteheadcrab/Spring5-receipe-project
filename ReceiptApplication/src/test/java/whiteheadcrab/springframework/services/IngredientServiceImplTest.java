@@ -56,25 +56,26 @@ public class IngredientServiceImplTest
 
 
     @Test
-    void findByRecipeIdAndIngredientId()
+    public void findByRecipeIdAndIngredientId() throws Exception
     {
         //given
         Recipe recipe = new Recipe();
         recipe.setId(1L);
 
         Ingredient ingredient1 = new Ingredient();
-        ingredient1.setId(1L);
+        ingredient1.setIngredientid(1L);
 
         Ingredient ingredient2 = new Ingredient();
-        ingredient2.setId(2L);
+        ingredient2.setIngredientid(1L);
 
         Ingredient ingredient3 = new Ingredient();
-        ingredient3.setId(3L);
+        ingredient3.setIngredientid(3L);
 
         recipe.addIngredients(ingredient1);
         recipe.addIngredients(ingredient2);
         recipe.addIngredients(ingredient3);
         Optional<Recipe> recipeOptional = Optional.of(recipe);
+
 
         when(recipeRepositories.findById(anyLong())).thenReturn(recipeOptional);
 
@@ -82,7 +83,7 @@ public class IngredientServiceImplTest
         IngredientCommand ingredientCommand = ingredientService.findByRecipeIdAndIngredientId(1L, 3L);
 
         //when
-        assertEquals(Long.valueOf(3L), ingredientCommand.getId());
+        assertEquals(Long.valueOf(3L), ingredientCommand.getIngredientid());
         assertEquals(Long.valueOf(1L), ingredientCommand.getRecipeId());
         verify(recipeRepositories, times(1)).findById(anyLong());
     }
@@ -91,14 +92,14 @@ public class IngredientServiceImplTest
     public void testSaveRecipeCommand() throws Exception {
         //given
         IngredientCommand command = new IngredientCommand();
-        command.setId(3L);
+        command.setIngredientid(3L);
         command.setRecipeId(2L);
 
         Optional<Recipe> recipeOptional = Optional.of(new Recipe());
 
         Recipe savedRecipe = new Recipe();
         savedRecipe.addIngredients(new Ingredient());
-        savedRecipe.getIngredients().iterator().next().setId(3L);
+        savedRecipe.getIngredients().iterator().next().setIngredientid(3L);
 
         when(recipeRepositories.findById(anyLong())).thenReturn(recipeOptional);
         when(recipeRepositories.save(any())).thenReturn(savedRecipe);
@@ -107,7 +108,7 @@ public class IngredientServiceImplTest
         IngredientCommand savedCommand = ingredientService.saveIngredientCommand(command);
 
         //then
-        assertEquals(Long.valueOf(3L), savedCommand.getId());
+        assertEquals(Long.valueOf(3L), savedCommand.getIngredientid());
         verify(recipeRepositories, times(1)).findById(anyLong());
         verify(recipeRepositories, times(1)).save(any(Recipe.class));
     }

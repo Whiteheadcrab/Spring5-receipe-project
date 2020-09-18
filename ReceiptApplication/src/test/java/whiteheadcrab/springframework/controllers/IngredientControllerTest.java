@@ -98,7 +98,7 @@ public class IngredientControllerTest
     public void testSaveOrUpdate() throws Exception {
         //given
         IngredientCommand command = new IngredientCommand();
-        command.setId(3L);
+        command.setIngredientid(3L);
         command.setRecipeId(2L);
 
         //when

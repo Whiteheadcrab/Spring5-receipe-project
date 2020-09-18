@@ -17,23 +17,23 @@ import static org.mockito.Mockito.*;
 
 public class UnitOfMeasureServiceImplTest
 {
-
-    UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand;
-    UnitOfMeasureService unitOfMeasureService;
+    UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand = new UnitOfMeasureToUnitOfMeasureCommand();
+    UnitOfMeasureService service;
 
     @Mock
-    UnitofMeasureRepository unitofMeasureRepository;
+    UnitofMeasureRepository unitOfMeasureRepository;
 
     @BeforeEach
     public void setUp() throws Exception
     {
         MockitoAnnotations.initMocks(this);
 
-        unitOfMeasureService = new UnitOfMeasureServiceImpl(unitofMeasureRepository, unitOfMeasureToUnitOfMeasureCommand);
+        service = new UnitOfMeasureServiceImpl(unitOfMeasureRepository, unitOfMeasureToUnitOfMeasureCommand);
     }
 
     @Test
-    public void listAllUoms() {
+    public void listAllUoms() throws Exception
+    {
         //given
         Set<UnitOfMeasure> unitOfMeasures = new HashSet<>();
         UnitOfMeasure uom1 = new UnitOfMeasure();
@@ -44,13 +44,14 @@ public class UnitOfMeasureServiceImplTest
         uom2.setId(2L);
         unitOfMeasures.add(uom2);
 
-        when(unitofMeasureRepository.findAll()).thenReturn(unitOfMeasures);
+        when(unitOfMeasureRepository.findAll()).thenReturn(unitOfMeasures);
 
         //when
-        Set<UnitofMeasureCommand> commands = unitOfMeasureService.listAllUoms();
+        Set<UnitofMeasureCommand> commands = service.listAllUoms();
 
         //then
         assertEquals(2, commands.size());
-        verify(unitofMeasureRepository, times(1)).findAll();
+        verify(unitOfMeasureRepository, times(1)).findAll();
+
     }
 }

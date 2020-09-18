@@ -79,10 +79,10 @@ public class RecipeCommandToRecipeTest {
         recipeCommand.getCategoryCommands().add(category2);
 
         IngredientCommand ingredient = new IngredientCommand();
-        ingredient.setId(INGRED_ID_1);
+        ingredient.setIngredientid(INGRED_ID_1);
 
         IngredientCommand ingredient2 = new IngredientCommand();
-        ingredient2.setId(INGRED_ID_2);
+        ingredient2.setIngredientid(INGRED_ID_2);
 
         recipeCommand.getIngredients().add(ingredient);
         recipeCommand.getIngredients().add(ingredient2);
