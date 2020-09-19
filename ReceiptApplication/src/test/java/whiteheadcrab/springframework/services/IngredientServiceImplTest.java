@@ -112,4 +112,5 @@ public class IngredientServiceImplTest
         verify(recipeRepositories, times(1)).findById(anyLong());
         verify(recipeRepositories, times(1)).save(any(Recipe.class));
     }
+
 }
