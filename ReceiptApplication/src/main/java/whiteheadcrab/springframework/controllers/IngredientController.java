@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import whiteheadcrab.springframework.commands.IngredientCommand;
+import whiteheadcrab.springframework.commands.RecipeCommand;
+import whiteheadcrab.springframework.commands.UnitofMeasureCommand;
 import whiteheadcrab.springframework.services.IngredientService;
 import whiteheadcrab.springframework.services.RecipeService;
 import whiteheadcrab.springframework.services.UnitOfMeasureService;
@@ -37,6 +39,28 @@ public class IngredientController
     }
 
     @GetMapping
+    @RequestMapping("recipe/{recipeId}/ingredient/new")
+    public String newRecipe(@PathVariable String recipeId , Model model)
+    {
+
+        //Checking recipeId
+        RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(recipeId));
+
+        //todo raise exception if null
+
+        //Initialize new IngredientCommand
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(Long.valueOf(recipeId));
+        model.addAttribute("ingredient", ingredientCommand);
+
+        //Initialize new UniotofMeasureCommand
+        ingredientCommand.setUnitofMeasureCommand(new UnitofMeasureCommand());
+        model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
+
+        return "recipe/ingredient/ingredientform";
+    }
+
+    @GetMapping
     @RequestMapping("recipe/{recipeId}/ingredient/{id}/show")
     public String showRecipeIngredient(@PathVariable String recipeId,
                                        @PathVariable String id , Model model)
@@ -54,6 +78,8 @@ public class IngredientController
         model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
         return "recipe/ingredient/ingredientform";
     }
+
+
 
     @PostMapping("recipe/{recipeId}/ingredient")
     public String saveOrUpdate(@ModelAttribute IngredientCommand command){
