@@ -44,7 +44,7 @@ public class IngredientToIngredientCommandTest
     {
         //given
         Ingredient ingredient = new Ingredient();
-        ingredient.setIngredientid(ID_VALUE);
+        ingredient.setId(ID_VALUE);
         ingredient.setDescription(DESCRIPTION);
         ingredient.setRecipe(RECIPE);
         ingredient.setAmount(AMOUNT);
@@ -55,7 +55,7 @@ public class IngredientToIngredientCommandTest
 
         //then
         assertNull(ingredientCommand.getUnitofMeasureCommand());
-        assertEquals(ID_VALUE,ingredientCommand.getIngredientid());
+        assertEquals(ID_VALUE,ingredientCommand.getId());
         assertEquals(DESCRIPTION,ingredientCommand.getDescription());
         assertEquals(AMOUNT,ingredientCommand.getAmount());
     }
@@ -65,7 +65,7 @@ public class IngredientToIngredientCommandTest
     {
         //given
         Ingredient ingredient = new Ingredient();
-        ingredient.setIngredientid(ID_VALUE);
+        ingredient.setId(ID_VALUE);
         ingredient.setDescription(DESCRIPTION);
         ingredient.setRecipe(RECIPE);
         ingredient.setAmount(AMOUNT);
@@ -80,7 +80,7 @@ public class IngredientToIngredientCommandTest
 
         //then
         assertNotNull(ingredientCommand.getUnitofMeasureCommand());
-        assertEquals(ID_VALUE,ingredientCommand.getIngredientid());
+        assertEquals(ID_VALUE,ingredientCommand.getId());
         assertEquals(UOM_ID,ingredientCommand.getUnitofMeasureCommand().getId());
         assertEquals(DESCRIPTION,ingredientCommand.getDescription());
         assertEquals(AMOUNT,ingredientCommand.getAmount());

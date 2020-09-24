@@ -74,7 +74,7 @@ public class IngredientServiceImpl implements IngredientService
             Optional<Ingredient> ingredientOptional = recipe
                     .getIngredients()
                     .stream()
-                    .filter(ingredient -> ingredient.getId().equals(command.getIngredientid()))
+                    .filter(ingredient -> ingredient.getId().equals(command.getId()))
                     .findFirst();
 
             if(ingredientOptional.isPresent()){
@@ -94,7 +94,7 @@ public class IngredientServiceImpl implements IngredientService
             Recipe savedRecipe = recipeRepositories.save(recipe);
 
             Optional<Ingredient> savedIngredientOptional = savedRecipe.getIngredients().stream()
-                    .filter(recipeIngredients -> recipeIngredients.getId().equals(command.getIngredientid()))
+                    .filter(recipeIngredients -> recipeIngredients.getId().equals(command.getId()))
                     .findFirst();
 
             //check by description

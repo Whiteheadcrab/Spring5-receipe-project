@@ -63,13 +63,13 @@ public class IngredientServiceImplTest
         recipe.setId(1L);
 
         Ingredient ingredient1 = new Ingredient();
-        ingredient1.setIngredientid(1L);
+        ingredient1.setId(1L);
 
         Ingredient ingredient2 = new Ingredient();
-        ingredient2.setIngredientid(1L);
+        ingredient2.setId(1L);
 
         Ingredient ingredient3 = new Ingredient();
-        ingredient3.setIngredientid(3L);
+        ingredient3.setId(3L);
 
         recipe.addIngredients(ingredient1);
         recipe.addIngredients(ingredient2);
@@ -83,7 +83,7 @@ public class IngredientServiceImplTest
         IngredientCommand ingredientCommand = ingredientService.findByRecipeIdAndIngredientId(1L, 3L);
 
         //when
-        assertEquals(Long.valueOf(3L), ingredientCommand.getIngredientid());
+        assertEquals(Long.valueOf(3L), ingredientCommand.getId());
         assertEquals(Long.valueOf(1L), ingredientCommand.getRecipeId());
         verify(recipeRepositories, times(1)).findById(anyLong());
     }
@@ -92,14 +92,14 @@ public class IngredientServiceImplTest
     public void testSaveRecipeCommand() throws Exception {
         //given
         IngredientCommand command = new IngredientCommand();
-        command.setIngredientid(3L);
+        command.setId(3L);
         command.setRecipeId(2L);
 
         Optional<Recipe> recipeOptional = Optional.of(new Recipe());
 
         Recipe savedRecipe = new Recipe();
         savedRecipe.addIngredients(new Ingredient());
-        savedRecipe.getIngredients().iterator().next().setIngredientid(3L);
+        savedRecipe.getIngredients().iterator().next().setId(3L);
 
         when(recipeRepositories.findById(anyLong())).thenReturn(recipeOptional);
         when(recipeRepositories.save(any())).thenReturn(savedRecipe);
@@ -108,7 +108,7 @@ public class IngredientServiceImplTest
         IngredientCommand savedCommand = ingredientService.saveIngredientCommand(command);
 
         //then
-        assertEquals(Long.valueOf(3L), savedCommand.getIngredientid());
+        assertEquals(Long.valueOf(3L), savedCommand.getId());
         verify(recipeRepositories, times(1)).findById(anyLong());
         verify(recipeRepositories, times(1)).save(any(Recipe.class));
     }
