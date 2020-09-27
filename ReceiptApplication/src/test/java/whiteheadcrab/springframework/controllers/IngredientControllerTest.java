@@ -135,4 +135,21 @@ public class IngredientControllerTest
                 .andExpect(view().name("redirect:/recipe/2/ingredient/3/show"));
 
     }
+
+
+    @Test
+    public void testDeleteIngredientCommand() throws Exception
+    {
+        //given
+        IngredientCommand command = new IngredientCommand();
+        command.setId(3L);
+        command.setRecipeId(2L);
+
+        //when
+        when(ingredientService.saveIngredientCommand(any())).thenReturn(command);
+        when(ingredientService.deleteIngredientCommand(any())).thenReturn(command);
+
+        //then
+
+    }
 }
