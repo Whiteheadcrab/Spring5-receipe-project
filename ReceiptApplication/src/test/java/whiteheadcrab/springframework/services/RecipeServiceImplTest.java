@@ -76,7 +76,7 @@ public class RecipeServiceImplTest {
     }
 
     @Test
-    void getRecipes()
+    public void getRecipes() throws Exception
     {
         Recipe recipe = new Recipe();
         HashSet recipesData = new HashSet();
@@ -92,8 +92,8 @@ public class RecipeServiceImplTest {
     }
 
     @Test
-    public void testDeleteById() throws Exception {
-
+    public void testDeleteById() throws Exception
+    {
         //given
         Long idToDelete = Long.valueOf(2L);
 

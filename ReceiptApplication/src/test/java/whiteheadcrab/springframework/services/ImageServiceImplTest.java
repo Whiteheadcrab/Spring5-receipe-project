@@ -1,6 +1,6 @@
 package whiteheadcrab.springframework.services;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
@@ -24,8 +24,9 @@ public class ImageServiceImplTest
 
     ImageService imageService;
 
-    @BeforeAll
-    public void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() throws Exception
+    {
         MockitoAnnotations.initMocks(this);
 
         imageService = new ImageServiceImpl(recipeRepositories);
