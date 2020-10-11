@@ -77,7 +77,7 @@ public class ImageControllerTest
     {
         //given
         RecipeCommand recipeCommand = new RecipeCommand();
-        recipeCommand.setId(1L)
+        recipeCommand.setId(1L);
 
         String s = "fake image text";
         Byte[] bytesBoxed = new Byte[s.getBytes().length];
@@ -90,6 +90,7 @@ public class ImageControllerTest
             bytesBoxed[i++] = primByte;
         }
 
+        //require to implement function "setImage" in class ImageController
         recipeCommand.setImage(bytesBoxed);
 
         when(recipeService.findCommandById(anyLong())).thenReturn(recipeCommand);
