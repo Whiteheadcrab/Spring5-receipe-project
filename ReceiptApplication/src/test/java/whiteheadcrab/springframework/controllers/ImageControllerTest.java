@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -11,6 +12,7 @@ import whiteheadcrab.springframework.commands.RecipeCommand;
 import whiteheadcrab.springframework.services.ImageService;
 import whiteheadcrab.springframework.services.RecipeService;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -30,7 +32,8 @@ public class ImageControllerTest
     MockMvc mockMvc;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() throws Exception
+    {
         MockitoAnnotations.initMocks(this);
 
         controller = new ImageController(imageService, recipeService);
@@ -38,7 +41,8 @@ public class ImageControllerTest
     }
 
     @Test
-    public void getImageForm() throws Exception {
+    public void getImageForm() throws Exception
+    {
         //given
         RecipeCommand command = new RecipeCommand();
         command.setId(1L);
@@ -55,7 +59,8 @@ public class ImageControllerTest
     }
 
     @Test
-    public void handleImagePost() throws Exception {
+    public void handleImagePost() throws Exception
+    {
         MockMultipartFile multipartFile =
                 new MockMultipartFile("imagefile", "testing.txt", "text/plain",
                         "Spring Framework Guru".getBytes());
@@ -65,5 +70,37 @@ public class ImageControllerTest
                 .andExpect(header().string("Location", "/recipe/1/show"));
 
         verify(imageService, times(1)).saveImageFile(anyLong(), any());
+    }
+
+    @Test
+    public void renderImageFromDB() throws Exception
+    {
+        //given
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L)
+
+        String s = "fake image text";
+        Byte[] bytesBoxed = new Byte[s.getBytes().length];
+
+        //for counting
+        int i = 0;
+
+        for(byte primByte : s.getBytes())
+        {
+            bytesBoxed[i++] = primByte;
+        }
+
+        recipeCommand.setImage(bytesBoxed);
+
+        when(recipeService.findCommandById(anyLong())).thenReturn(recipeCommand);
+
+        //when
+        MockHttpServletResponse response = mockMvc.perform(get("/recipe/1/recipeimage"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse();
+
+        byte responseByte[] = response.getContentAsByteArray();
+
+        assertEquals(s.getBytes().length , responseByte.length);
     }
 }
