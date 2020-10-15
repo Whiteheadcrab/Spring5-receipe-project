@@ -90,7 +90,6 @@ public class ImageControllerTest
             bytesBoxed[i++] = primByte;
         }
 
-        //require to implement function "setImage" in class ImageController
         recipeCommand.setImage(bytesBoxed);
 
         when(recipeService.findCommandById(anyLong())).thenReturn(recipeCommand);
