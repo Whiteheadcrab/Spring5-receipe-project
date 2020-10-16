@@ -1,5 +1,6 @@
 Aim : Create Application for providing receipts storage and receipts , as objects , manipulations .
-Added posibility to create recipes using forms.
+Added possibility to create recipes, ingredients using forms.
+Also appeared possibility to add/modify description , time of cooking , difficulty , category of receipt and also images .
 
 Used Technology :
 Spring Boot : Including Web and Devtools,  
