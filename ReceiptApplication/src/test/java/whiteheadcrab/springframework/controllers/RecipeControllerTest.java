@@ -9,6 +9,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import whiteheadcrab.springframework.commands.RecipeCommand;
 import whiteheadcrab.springframework.domain.Recipe;
+import whiteheadcrab.springframework.exceptions.NotFoundException;
 import whiteheadcrab.springframework.services.RecipeService;
 
 import static org.mockito.ArgumentMatchers.any;

@@ -1,13 +1,14 @@
 package whiteheadcrab.springframework.services;
 
+import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import whiteheadcrab.springframework.commands.RecipeCommand;
 import whiteheadcrab.springframework.converters.RecipeCommandToRecipe;
 import whiteheadcrab.springframework.converters.RecipeToCommandRecipe;
 import whiteheadcrab.springframework.domain.Recipe;
+import whiteheadcrab.springframework.exceptions.NotFoundException;
 import whiteheadcrab.springframework.repositories.RecipeRepositories;
 
 import java.util.HashSet;
@@ -31,8 +32,9 @@ public class RecipeServiceImplTest {
     @Mock
     RecipeCommandToRecipe recipeCommandToRecipe;
 
+
     @BeforeEach
-    void setUp()
+    public void setUp()
     {
         MockitoAnnotations.initMocks(this);
 
@@ -40,7 +42,7 @@ public class RecipeServiceImplTest {
     }
 
     @Test
-    void getRecipeByIdTest() throws Exception
+    public void getRecipeByIdTest() throws Exception
     {
         Recipe recipe = new Recipe();
         recipe.setId(1L);
@@ -112,9 +114,9 @@ public class RecipeServiceImplTest {
 
         Optional<Recipe> recipeOptional = Optional.empty();
 
-        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        when(recipeRepositories.findById(anyLong())).thenReturn(recipeOptional);
 
-        Recipe recipeReturned = recipeService.findById(1L);
+        Recipe recipeReturned = recipeServiceimpl.findById(1L);
 
         //should go boom
     }
