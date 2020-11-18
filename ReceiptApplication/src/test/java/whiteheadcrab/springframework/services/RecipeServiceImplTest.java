@@ -1,7 +1,7 @@
 package whiteheadcrab.springframework.services;
 
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import whiteheadcrab.springframework.commands.RecipeCommand;
@@ -33,8 +33,8 @@ public class RecipeServiceImplTest {
     RecipeCommandToRecipe recipeCommandToRecipe;
 
 
-    @BeforeEach
-    public void setUp()
+    @Before
+    public void setUp() throws Exception
     {
         MockitoAnnotations.initMocks(this);
 

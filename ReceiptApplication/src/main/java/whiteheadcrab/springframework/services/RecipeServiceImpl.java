@@ -7,6 +7,7 @@ import whiteheadcrab.springframework.commands.RecipeCommand;
 import whiteheadcrab.springframework.converters.RecipeCommandToRecipe;
 import whiteheadcrab.springframework.converters.RecipeToCommandRecipe;
 import whiteheadcrab.springframework.domain.Recipe;
+import whiteheadcrab.springframework.exceptions.NotFoundException;
 import whiteheadcrab.springframework.repositories.RecipeRepositories;
 
 import java.util.HashSet;
@@ -46,7 +47,8 @@ public class RecipeServiceImpl implements RecipeService
 
         if (!recipeOptional.isPresent())
         {
-            throw new RuntimeException("Recipe Not Found!");
+            //throw new RuntimeException("Recipe Not Found!");
+            throw new NotFoundException("Recipe Not Found");
         }
 
         return  recipeOptional.get();
