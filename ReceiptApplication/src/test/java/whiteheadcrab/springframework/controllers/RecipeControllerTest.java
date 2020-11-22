@@ -79,6 +79,14 @@ public class RecipeControllerTest
     }
 
     @Test
+    public void testGetRecipeNumberFormatException() throws Exception
+    {
+        mockMvc.perform(get("/recipe/asdf/show"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("400error"));
+    }
+
+    @Test
     public void testPostNewRecipeForm() throws Exception
     {
         RecipeCommand command = new RecipeCommand();
@@ -88,8 +96,6 @@ public class RecipeControllerTest
 
         mockMvc.perform(post("/recipe")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-//                .param("id", "")
-//                .param("description", "some string")
         )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/recipe/2/show"));
