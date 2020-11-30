@@ -114,10 +114,11 @@ public class RecipeControllerTest
         mockMvc.perform(post("/recipe")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("id", "")
+                .param("cookTime", "3000")
 
         )
                 .andExpect(model().attributeExists("recipe"))
-                .andExpect(view().name("redirect:/recipe/2/show"));
+                .andExpect(view().name("recipe/recipeform"));
     }
 
     @Test
