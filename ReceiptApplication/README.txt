@@ -10,3 +10,4 @@ Maven ;
 
 Used for training : 
 - Spring Data JPA Ouery Methods
+- Spring MVC Internationalization
